@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CompareDirectory": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\James\\Desktop\\TEST\\U盘\" \"D:\\James\\Desktop\\TEST\\备份\""
+    }
+  }
+}
