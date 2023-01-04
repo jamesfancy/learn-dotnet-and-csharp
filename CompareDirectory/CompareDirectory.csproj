@@ -5,9 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>FancyIdea.CompareDirectory</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Viyi.Strings" Version="1.2.3" />
     <PackageReference Include="Viyi.Util" Version="2.1.0-alpha" />
   </ItemGroup>
 
