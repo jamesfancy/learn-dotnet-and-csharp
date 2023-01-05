@@ -1,6 +1,4 @@
-using FancyIdea.DependencyInjection.Mysql;
 using FancyIdea.DependencyInjection.Sample;
-using FancyIdea.DependencyInjection.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,12 +18,11 @@ var dbType = configuration["dbType"]?.Trim().ToLower();
 // 使用微软的 DI 框架，配置 ServiceCollection
 ServiceCollection services = new();
 
-// 将配置接口和实现关联配置工作交给每个数据库的实现库去完成，
-// 只需要约定统一的一个配置入口，由主程序调用就行
-_ = dbType switch {
-    "mysql" => services.AddMysqlRepository(),
-    _ => services.AddSqliteRepository(),
-};
+// 使用 RepositoryLoader 根据配置动态加载 Repository 实现，
+// 现在 DependencyInjectionSample 是的数据库已经不需要修改任何代码了
+// 注1：DependencyInjectionSample 已经去掉了对两个 Repository 实现项目的引用
+// 主2：运行前需要手工拷贝需要的实现库 (XxxRepository.dll) 到生成目标目录
+new RepositoryLoader(services).Load(dbType ?? "");
 
 // DI 框架创建对象的时候会自动应用“构造函数注入方法”，
 // 我们可以利用这一特点，用框架来产生 BusinessService 对象，

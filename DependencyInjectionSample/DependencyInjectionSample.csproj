@@ -20,8 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DependencyInjectionAbstraction\DependencyInjectionAbstraction.csproj" />
-    <ProjectReference Include="..\MysqlRepository\MysqlRepository.csproj" />
-    <ProjectReference Include="..\SqliteRepository\SqliteRepository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
