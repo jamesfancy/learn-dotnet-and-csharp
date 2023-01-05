@@ -1,42 +1,21 @@
-using Microsoft.Data.Sqlite;
-//using MySqlConnector;
+using System.Data.Common;
 
 namespace FancyIdea.DependencyInjection.Sqlite;
 
-// sqlite version
+// 注意到这个文件，已经不依赖任何 SQLite 或 MySQL 的命名空间，
+// 这表示已经提取了公共业务代码
+
 public class SomeRepository {
-    public string GetDbType() => "SQLite";
+    // 通过属性注入 DbType
+    public string? DbType { get; set; }
 
-    public string GetVersion() {
-        var csBuilder = new SqliteConnectionStringBuilder {
-            DataSource = """d:\james\desktop\diSample.sqlite3""",
-        };
+    public string GetDbType() => DbType ?? "Unknown";
 
-        using SqliteConnection sqliteConn = new(csBuilder.ConnectionString);
-
-        sqliteConn.Open();
-        SqliteCommand cmd = sqliteConn.CreateCommand();
-        cmd.CommandText = "select sqlite_version()";
+    // 通过参数注入数据库连接对象和命令
+    public string GetVersion(DbConnection conn, string sql) {
+        conn.Open();
+        DbCommand cmd = conn.CreateCommand();
+        cmd.CommandText = sql;
         return cmd.ExecuteScalar() as string ?? "unknown";
     }
 }
-
-// mysql version
-//public class SomeRepository {
-//    public string GetDbType() => "MySQL";
-
-//    public string GetVersion() {
-//        var csBuilder2 = new MySqlConnectionStringBuilder {
-//            Server = "mysql.local",
-//            Database = "test",
-//            UserID = "test",
-//            Password = "test@2023"
-//        };
-
-//        using var conn = new MySqlConnection(csBuilder2.ConnectionString);
-//        conn.Open();
-//        var cmd = conn.CreateCommand();
-//        cmd.CommandText = "select version()";
-//        return cmd.ExecuteScalar() as string ?? "unknown";
-//    }
-//}
