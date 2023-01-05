@@ -1,7 +1,7 @@
 using FancyIdea.DependencyInjection.Abstraction;
 using MySqlConnector;
 
-namespace FancyIdea.DependencyInjectionSample.Repository;
+namespace FancyIdea.DependencyInjection.Mysql;
 
 public class MysqlRepository : IRepository {
     public string GetDbType() => "MySQL";
